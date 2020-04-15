@@ -1,6 +1,8 @@
 const express = require("express");
 const ExpressError = require('../helpers/expressError');
 const Company = require('../models/company')
+// const jasonschema = require("jsonschema");
+// const companySchema = require("../schemas/companySchema")
 
 const router = new express.Router();
 
@@ -22,17 +24,54 @@ router.get('/', async function(req, res, next) {
 })
 
 router.post('/', async function(req, res, next) {
-  let handle = req.body.handle;
-  let name = req.body.name;
-  let num_employees = req.body.num_employees;
-  let description = req.body.description;
-  let logo_url = req.body.logo_url;
-  
+  console.log("req.body : ", req.body)
   try {
-    let company = await Company.create(handle, name, num_employees, description, logo_url);
+    let company = await Company.createComp(req.body);
+    
     return res.json({company});
   } catch (err) {
-    return next(err);
+    // if(err.code ==='23505'){
+    //   return next(new ExpressError(`${company.name} company name already exists`))
+    // }
+    return next(err)
   }
 })
+
+router.get('/:handle', async function(req, res, next) {
+  
+  try{
+  const companyData = await Company.get(req.params.handle)
+
+  return res.json({company: companyData})
+  } catch(err) {
+
+    return next(err)
+  }
+
+})
+
+router.patch('/:handle', async function(req, res, next) {
+  try {
+
+    const updatedCompany = await Company.updateCompany(req.params.handle, req.body)
+
+    return res.json({company: updatedCompany})
+
+  } catch(err) {
+    return next(err)
+  }
+})
+
+router.delete('/:handle', async function( req, res, next) {
+  try {
+    const results = await Company.deleteCompany(req.params.handle)
+    return res.json({message: results})
+
+  } catch(err) {
+
+    return next(err)
+  }
+})
+
+
 module.exports = router;
