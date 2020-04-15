@@ -21,4 +21,18 @@ router.get('/', async function(req, res, next) {
   }
 })
 
+router.post('/', async function(req, res, next) {
+  let handle = req.body.handle;
+  let name = req.body.name;
+  let num_employees = req.body.num_employees;
+  let description = req.body.description;
+  let logo_url = req.body.logo_url;
+  
+  try {
+    let company = await Company.create(handle, name, num_employees, description, logo_url);
+    return res.json({company});
+  } catch (err) {
+    return next(err);
+  }
+})
 module.exports = router;

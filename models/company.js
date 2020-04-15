@@ -18,6 +18,26 @@ class Company {
       throw new ExpressError(`No results for '${searchValue}'`, 404)
     }
   }
+
+  static async create({ handle, name, num_employees, description, logo_url }) {
+    console.log('input', { handle, name, num_employees, description, logo_url })
+    const result = await db.query(`
+    INSERT INTO companies (
+      handle,
+      name,
+      num_employees,
+      description,
+      logo_url
+    )
+    VALUES ($1 $2 $3 $4 $5)
+    RETURNING handle,
+    name,
+    num_employees,
+    description,
+    logo_url`, [ handle, name, num_employees, description, logo_url ]
+    );
+    return result.rows[0];
+  }
 }
 
-module.exports = Company;
+module.export = Company;
