@@ -3,20 +3,33 @@ const db = require("../db");
 const sqlForPartialUpdate = require("../helpers/partialUpdate")
 
 class Company {
-  
-  static async search(searchValue, minEmployees, maxEmployees) {
+
+  static async getAll() {
     const results = await db.query(`
-      SELECT handle, name
-      FROM companies
-      WHERE name ILIKE $1
-      AND num_employees > $2
-      AND num_employees < $3
-      `, [`%${searchValue}%`, minEmployees, maxEmployees]
-    )
+    SELECT handle, name FROM companies
+    `);
     if ( results.rows.length > 0 ) {
       return results.rows;
     } else {
-      throw new ExpressError(`No results for '${searchValue}'`, 404)
+      throw new ExpressError(`No companies found.`, 404);
+    }
+  }
+  
+  static async search(searchValue, minEmployees, maxEmployees) {
+    
+    const results = await db.query(`
+    SELECT handle, name
+    FROM companies
+    WHERE name LIKE $1
+    AND num_employees > $2
+    AND num_employees < $3
+    `, [`%${searchValue}%`, minEmployees, maxEmployees]
+    );
+    // console.error("RESULTS IS ", results)
+    if ( results.rows.length > 0 ) {
+      return results.rows;
+    } else {
+      throw new ExpressError(`No results for ${searchValue}`, 404);
     }
   }
 
