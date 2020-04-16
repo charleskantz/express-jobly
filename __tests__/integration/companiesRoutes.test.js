@@ -43,7 +43,6 @@ describe("Company GET Routes Integration Tests", function() {
 
   it("Should search for a company by name", async function() {
     const response = await request(app).get('/companies?search=test');
-
     expect(response.statusCode).toBe(200);
     expect(response.body.companies).toHaveLength(1);
     expect(response.body.companies[0]).toHaveProperty('handle');
@@ -52,8 +51,8 @@ describe("Company GET Routes Integration Tests", function() {
 
   it("Should return error if given a bad name", async function() {
     const response = await request(app).get('/companies?search=Nope');
-    expect(response.statusCode).toBe(404);
-    expect(response.error.text).toEqual('{"status":404,"message":"No results for Nope"}');
+    expect(response.statusCode).toBe(200);
+    expect(response.body.companies).toEqual('No results found.');
 
   });
 

@@ -22,7 +22,7 @@ class Company {
     `, [`%${searchValue}%`, minEmployees, maxEmployees]
     );
     if(results.rows.length === 0) {
-      return "no result found"
+      return "No results found."
     } else{
       return results.rows;
     }
