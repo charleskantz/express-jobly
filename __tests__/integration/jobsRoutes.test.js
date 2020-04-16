@@ -136,6 +136,13 @@ describe("Job GET Routes Integration Tests", function() {
     expect(response.error.text).toEqual("{\"status\":404,\"message\":\"No job with id '9999' found\"}");
   })
 
+  it ("Should delete jobs connected to a company when that company is deleted", async function() {
+    await request(app).delete(`/companies/testcompany`);
+    const response = await request(app).delete(`/jobs/${jobID}`);
+    expect(response.statusCode).toBe(404);
+    expect(response.error.text).toEqual(`{\"status\":404,\"message\":\"No job with id '${jobID}' found\"}`);
+  })
+
 });
 
 describe("Job POST Routes Integration Tests", function() {

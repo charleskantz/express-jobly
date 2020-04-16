@@ -13,7 +13,17 @@ CREATE TABLE jobs (
   equity FLOAT NOT NULL CHECK (equity <= 1 AND equity >= 0),
   company_handle TEXT references companies ON DELETE CASCADE,  /** FORGEIGN KEY TO companies.handle */
   date_posted TIMESTAMP NOT NULL DEFAULT current_timestamp
-)
+);
+
+CREATE TABLE users (
+  username TEXT PRIMARY KEY,
+  password TEXT NOT NULL,
+  first_name TEXT NOT NULL,
+  last_name TEXT NOT NULL,
+  email TEXT NOT NULL UNIQUE,
+  photo_url TEXT,
+  is_admin BOOLEAN NOT NULL DEFAULT FALSE
+);
 
 
 -- CREATE TABLE messages (
