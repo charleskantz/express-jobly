@@ -6,6 +6,14 @@ CREATE TABLE companies (
     logo_url text
 );
 
+CREATE TABLE jobs (
+  id SERIAL PRIMARY KEY,
+  title TEXT NOT NULL,
+  salary FLOAT NOT NULL,
+  equity FLOAT NOT NULL CHECK (equity <= 1 AND equity >= 0),
+  company_handle TEXT references companies ON DELETE CASCADE,  /** FORGEIGN KEY TO companies.handle */
+  date_posted TIMESTAMP NOT NULL DEFAULT current_timestamp
+)
 
 
 -- CREATE TABLE messages (

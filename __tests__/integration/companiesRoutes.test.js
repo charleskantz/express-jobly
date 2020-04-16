@@ -73,6 +73,7 @@ describe("Company GET Routes Integration Tests", function() {
     const response = await request(app).get(`/companies/testcompany`);
     expect(response.statusCode).toBe(200);
     expect(response.body.company).toHaveProperty('handle');
+    expect(response.body.company).toHaveProperty('jobs');
   })
 
   it("If invalid company handle is passed as parameter in the URL it should return error", async function(){

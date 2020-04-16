@@ -60,8 +60,19 @@ class Company {
     FROM companies
     WHERE handle = $1`, [handle]
     );
-  
+
+    const jobs = await db.query(`
+      SELECT id,
+        title,
+        salary,
+        equity,
+        company_handle
+      FROM jobs
+      WHERE company_handle = $1
+      `, [handle]
+    );
     if ( results.rows.length > 0 ) {
+      results.rows[0].jobs = jobs.rows;
       return results.rows[0];
     } else {
       throw new ExpressError(`No company wit handle '${handle}'`, 404)
