@@ -5,9 +5,13 @@ const db = require("../../db");
 const Company = require("../../models/company");
 
 process.env.NODE_ENV = 'test';
-let testCompany;
 
-describe("Company Routes Integration Tests", function() {
+let testCompany;
+let testCompanyData = {"handle": "testcompany", "name": "Toy Company", "description": "We make wooden toys", "num_employees": 50, "logo_url": "www.toys.com"}
+let incompleteCompanyData = {"name": "Toy Company", "description": "We make wooden toys", "num_employees": 50, "logo_url": "www.toys.com"}
+let badCompanyData = {"name": "Toy Company", "description": 1000, "num_employees": "50", "logo_url": "www.toys.com"}
+
+describe("Company GET Routes Integration Tests", function() {
 
 
   beforeEach(async function () {
@@ -57,19 +61,68 @@ describe("Company Routes Integration Tests", function() {
     const response = await request(app).get('/companies?min_employees=500&max_employees=100');
     expect(response.statusCode).toBe(400);
     expect(response.error.text).toEqual('{"status":400,"message":"The minimum employees cannot be more than the maximum employees."}');
-
   });
 
-});
-  
-  
+  it("If company handle is passed as parameter in the URL it should return data about an existing company", async function(){
+    const response = await request(app).get(`/companies/testcompany`);
+    expect(response.statusCode).toBe(200);
+    expect(response.body.company).toHaveProperty('handle');
+  })
 
-  // POST route
+  it("If invalid company handle is passed as parameter in the URL it should return error", async function(){
+    const response = await request(app).get(`/companies/test`);
+    expect(response.statusCode).toBe(404);
+    expect(response.error.text).toEqual("{\"status\":404,\"message\":\"No company wit handle 'test'\"}");
+  })
 
-  // PATCH route
+  //PATCH route
+
+  it("Should update a company in the database", async function() {
+    const response = await request(app).patch("/companies/testcompany").send(incompleteCompanyData);
+    expect(response.statusCode).toBe(200);
+    expect(response.body.company).toEqual(testCompanyData)
+  })
+  it("Should rejecy updates and return 400 error if we pass invlaid data", async function(){
+    const response = await request(app).patch("/companies/testcompany").send(badCompanyData);
+    expect(response.statusCode).toBe(400);
+    expect(response.error.text).toEqual("{\"status\":400,\"message\":[\"instance.num_employees is not of a type(s) integer\",\"instance.description is not of a type(s) string\"]}");
+  })
 
   // DELETE route
 
+  it ("Should delete the company from the database", async function() {
+    const response = await request(app).delete("/companies/testcompany");
+    expect(response.statusCode).toBe(200);
+    expect(response.body.message).toEqual("Company deleted");
+  })
+
+  it ("Should return an error if handle is invalid", async function() {
+    const response = await request(app).delete("/companies/test");
+    expect(response.statusCode).toBe(404);
+    expect(response.error.text).toEqual("{\"status\":404,\"message\":\"No company with handle 'test' found\"}");
+  })
+});
+
+describe("Company POST Routes Integration Tests", function() {
+
+  beforeEach(async function () {
+    await db.query("DELETE FROM companies");
+  })
+
+  // POST route
+
+  it("Should add a company to the databse", async function() {
+    const response = await request(app).post("/companies").send(testCompanyData);
+    expect(response.statusCode).toBe(200);
+    expect(response.body.company).toHaveProperty('handle')
+    expect(response.body.company).toEqual(testCompanyData);
+  })
+  it("Should return 400 error for missing required fields ", async function(){
+    const response = await request(app).post("/companies").send(incompleteCompanyData);
+    expect(response.statusCode).toBe(400);
+    expect(response.error.text).toEqual("{\"status\":400,\"message\":[\"instance requires property \\\"handle\\\"\"]}")
+  })
+});
 
 afterAll(async function() {
   // close db connection
