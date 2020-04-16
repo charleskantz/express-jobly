@@ -5,8 +5,8 @@
     "title": "The Root Schema",
     "description": "The root schema comprises the entire JSON document.",
     "default": {},
-    "additionalProperties": true,
-    "required": [
+    "additionalProperties": false,
+    "anyOf": [{"required": ["handle"]}, {"required": ["name"]}, {"required": ["num_employees"]}, {"required": ["description"]}, {"required": ["logo_url"]}
     ],
     "properties": {
         "handle": {

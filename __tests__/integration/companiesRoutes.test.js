@@ -50,7 +50,7 @@ describe("Company GET Routes Integration Tests", function() {
 
   });
 
-  it("Should error if given a bad name", async function() {
+  it("Should return error if given a bad name", async function() {
     const response = await request(app).get('/companies?search=Nope');
     expect(response.statusCode).toBe(404);
     expect(response.error.text).toEqual('{"status":404,"message":"No results for Nope"}');
@@ -62,6 +62,13 @@ describe("Company GET Routes Integration Tests", function() {
     expect(response.statusCode).toBe(400);
     expect(response.error.text).toEqual('{"status":400,"message":"The minimum employees cannot be more than the maximum employees."}');
   });
+
+  // it("Should return search results if empty string in search", async function() {
+  //   const response = await request(app).get('/companies?max_employees=100');
+  //   expect(response.statusCode).toBe(200);
+  //   expect(response.body.companies).toHaveLength(1);
+  //   expect(response.body.companies[0]).toHaveProperty('handle');
+  // });
 
   it("If company handle is passed as parameter in the URL it should return data about an existing company", async function(){
     const response = await request(app).get(`/companies/testcompany`);
@@ -76,13 +83,13 @@ describe("Company GET Routes Integration Tests", function() {
   })
 
   //PATCH route
-
+  //send an empty object
   it("Should update a company in the database", async function() {
     const response = await request(app).patch("/companies/testcompany").send(incompleteCompanyData);
     expect(response.statusCode).toBe(200);
     expect(response.body.company).toEqual(testCompanyData)
   })
-  it("Should rejecy updates and return 400 error if we pass invlaid data", async function(){
+  it("Should reject updates and return 400 error if we pass invlaid data", async function(){
     const response = await request(app).patch("/companies/testcompany").send(badCompanyData);
     expect(response.statusCode).toBe(400);
     expect(response.error.text).toEqual("{\"status\":400,\"message\":[\"instance.num_employees is not of a type(s) integer\",\"instance.description is not of a type(s) string\"]}");

@@ -18,7 +18,7 @@ router.get('/', async function(req, res, next) {
     // queries were passed so we do the search
     let search = req.query.search || '';
     let minEmployees = parseInt(req.query.min_employees) || 0;
-    let maxEmployees = parseInt(req.query.max_employees) || 99999999;
+    let maxEmployees = parseInt(req.query.max_employees) || 99999999999; //Number.MAX_SAFE_INTEGER;
 
     if ( minEmployees > maxEmployees ) {
       throw new ExpressError(`The minimum employees cannot be more than the maximum employees.`, 400);
@@ -54,9 +54,9 @@ router.post('/', async function(req, res, next) {
 router.get('/:handle', async function(req, res, next) {
   
   try{
-  const companyData = await Company.get(req.params.handle)
+    const companyData = await Company.get(req.params.handle)
 
-  return res.json({company: companyData})
+    return res.json({company: companyData})
   } catch(err) {
 
     return next(err)

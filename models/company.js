@@ -8,11 +8,7 @@ class Company {
     const results = await db.query(`
     SELECT handle, name FROM companies
     `);
-    if ( results.rows.length > 0 ) {
-      return results.rows;
-    } else {
-      throw new ExpressError(`No companies found.`, 404);
-    }
+    return results.rows;
   }
   
   static async search(searchValue, minEmployees, maxEmployees) {
@@ -25,11 +21,10 @@ class Company {
     AND num_employees < $3
     `, [`%${searchValue}%`, minEmployees, maxEmployees]
     );
-    // console.error("RESULTS IS ", results)
-    if ( results.rows.length > 0 ) {
+    if(results.rows.length === 0) {
+      return "no result found"
+    } else{
       return results.rows;
-    } else {
-      throw new ExpressError(`No results for ${searchValue}`, 404);
     }
   }
 
