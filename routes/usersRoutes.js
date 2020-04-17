@@ -15,7 +15,7 @@ router.get('/', async function(req, res, next) {
   try {
     users = await User.getAll()
 
-    return res.json(users)
+    return res.json({users})
   } catch (err) {
     return next(err)
   }
@@ -73,4 +73,6 @@ router.delete('/:username', async function( req, res, next) {
     return next(err);
   }
 });
+
+module.exports = router;
 

@@ -30,7 +30,7 @@ class User {
     }
   }
 
-  static async createUser({ username, password,first_name, last_name, email, photo_url, is_admin }) {
+  static async createUser({ username, password, first_name, last_name, email, photo_url, is_admin }) {
     
     const result = await db.query(`
     INSERT INTO users (
