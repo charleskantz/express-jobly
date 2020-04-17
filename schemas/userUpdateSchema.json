@@ -7,15 +7,14 @@
   "default": {},
   "additionalProperties": false,
   "anyOf": [
-    {"required": ["username"]},
-    {"required": ["first_name"]},
-    {"required": ["last_name"]},
-    {"required": ["password"]},
-    {"required": ["photo_url"]},
-    {"required": ["email"]},
-    {"required": ["is_admin"]}
+    {"required": ["_token", "username"]},
+    {"required": ["_token", "first_name"]},
+    {"required": ["_token", "last_name"]},
+    {"required": ["_token", "password"]},
+    {"required": ["_token", "photo_url"]},
+    {"required": ["_token", "email"]},
+    {"required": ["_token", "is_admin"]}
   ],
-  
   "properties": {
       "username": {
           "$id": "#/properties/username",
@@ -87,6 +86,16 @@
           "examples": [
               true
           ]
-      }
+      },
+      "_token": {
+        "$id": "#/properties/_token",
+        "type": "string",
+        "title": "The _token Schema",
+        "description": "JWT token",
+        "default": "",
+        "examples": [
+            "thisisatoken"
+        ]
+    }
   }
 }

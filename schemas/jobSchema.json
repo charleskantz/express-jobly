@@ -9,7 +9,8 @@
   "required": [
       "title",
       "salary",
-      "equity"
+      "equity",
+      "_token"
   ],
   "properties": {
       "title": {
@@ -53,6 +54,16 @@
           "examples": [
               "rithm"
           ]
-      }
+      },
+      "_token": {
+        "$id": "#/properties/_token",
+        "type": "string",
+        "title": "The _token Schema",
+        "description": "JWT token",
+        "default": "",
+        "examples": [
+            "thisisatoken"
+        ]
+    }
   }
 }

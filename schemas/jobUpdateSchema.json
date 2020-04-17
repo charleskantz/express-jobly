@@ -7,10 +7,10 @@
   "default": {},
   "additionalProperties": false,
   "anyOf": [
-    {"required": ["title"]},
-    {"required": ["salary"]},
-    {"required": ["equity"]},
-    {"required": ["company_handle"]}
+    {"required": ["_token", "title"]},
+    {"required": ["_token", "salary"]},
+    {"required": ["_token", "equity"]},
+    {"required": ["_token", "company_handle"]}
   ],
   "properties": {
       "title": {
@@ -54,6 +54,16 @@
           "examples": [
               "rithm"
           ]
-      }
+      },
+      "_token": {
+        "$id": "#/properties/_token",
+        "type": "string",
+        "title": "The _token Schema",
+        "description": "JWT token",
+        "default": "",
+        "examples": [
+            "thisisatoken"
+        ]
+    }
   }
 }

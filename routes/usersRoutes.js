@@ -1,13 +1,14 @@
 const express = require("express");
 const ExpressError = require('../helpers/expressError');
-const User = require('../models/user')
+const User = require('../models/user');
 const jsonSchema = require("jsonschema");
 const userSchema = require('../schemas/userSchema.json');
 const userUpdateSchema = require('../schemas/userUpdateSchema.json');
+const { SECRET_KEY } = require('../config');
+const jwt = require("jsonwebtoken");
+const { ensureCorrectUser } = require('../middleware/auth');
 
 const router = new express.Router();
-
-router
 
 module.exports = router;
 
@@ -32,6 +33,7 @@ router.get('/:username', async function(req, res, next) {
 
 })
 
+// Register a new user
 router.post('/', async function(req, res, next) {
   try {
     const result = jsonSchema.validate(req.body, userSchema);
@@ -42,14 +44,15 @@ router.post('/', async function(req, res, next) {
       return next(error);
     }
 
-  let userData = await User.createUser(req.body);
-      return res.json({ user: userData });
+    let { username, is_admin } = await User.createUser(req.body);
+    let token = jwt.sign({ username, is_admin }, SECRET_KEY);
+    return res.json({ token });
   } catch (err) {
     return next(err);
   }
   });
 
-router.patch('/:username', async function(req, res, next) {
+router.patch('/:username', ensureCorrectUser, async function(req, res, next) {
   try {
     //If PATCH request has no data, return error
     if ( Object.keys(req.body).length === 0 ) {
@@ -69,7 +72,7 @@ router.patch('/:username', async function(req, res, next) {
   }
 })
 
-router.delete('/:username', async function( req, res, next) {
+router.delete('/:username', ensureCorrectUser, async function( req, res, next) {
   try {
     const results = await User.deleteUser(req.params.username);
     return res.json({message: results});

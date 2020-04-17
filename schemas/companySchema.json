@@ -8,7 +8,8 @@
     "additionalProperties": false,
     "required": [
         "handle",
-        "name"
+        "name",
+        "_token"
     ],
     "properties": {
         "handle": {
@@ -60,6 +61,16 @@
             "examples": [
                 "https://image.shutterstock.com/image-vector/shield-letter-s-logosafesecureprotection-logomodern-260nw-633031571.jpg"
             ]
-        }
+        },
+        "_token": {
+          "$id": "#/properties/_token",
+          "type": "string",
+          "title": "The _token Schema",
+          "description": "JWT token",
+          "default": "",
+          "examples": [
+              "thisisatoken"
+          ]
+      }
     }
 }

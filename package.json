@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^4.0.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jest": "^25.3.0",
@@ -23,7 +24,8 @@
   },
   "jest": {
     "testPathIgnorePatterns": [
-      "<rootDir>/__tests__/integration/config","<rootDir>/__tests__/unit/config"
+      "<rootDir>/__tests__/integration/config",
+      "<rootDir>/__tests__/unit/config"
     ]
   }
 }

@@ -6,7 +6,12 @@
     "description": "The root schema comprises the entire JSON document.",
     "default": {},
     "additionalProperties": false,
-    "anyOf": [{"required": ["handle"]}, {"required": ["name"]}, {"required": ["num_employees"]}, {"required": ["description"]}, {"required": ["logo_url"]}
+    "anyOf": [
+      {"required": ["_token", "handle"]},
+      {"required": ["_token", "name"]},
+      {"required": ["_token", "num_employees"]},
+      {"required": ["_token", "description"]},
+      {"required": ["_token", "logo_url"]}
     ],
     "properties": {
         "handle": {
@@ -58,6 +63,16 @@
             "examples": [
                 "https://image.shutterstock.com/image-vector/shield-letter-s-logosafesecureprotection-logomodern-260nw-633031571.jpg"
             ]
-        }
+        },
+        "_token": {
+          "$id": "#/properties/_token",
+          "type": "string",
+          "title": "The _token Schema",
+          "description": "JWT token",
+          "default": "",
+          "examples": [
+              "thisisatoken"
+          ]
+      }
     }
 }
