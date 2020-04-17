@@ -58,11 +58,12 @@ class User {
   }
 
   static async updateUser(username, updates) {
-    const {query, values} = sqlForPartialUpdate("users", updates, "username", username)
+    const {query, values} = sqlForPartialUpdate("users", updates, "username", username);
     const results = await db.query(
       query, values
     )
     if ( results.rows.length > 0 ) {
+      delete results.rows[0].password;
       return results.rows[0];
     } else {
       throw new ExpressError(`No user with username '${username}' found`, 404)

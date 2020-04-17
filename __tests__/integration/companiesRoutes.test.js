@@ -62,12 +62,12 @@ describe("Company GET Routes Integration Tests", function() {
     expect(response.error.text).toEqual('{"status":400,"message":"The minimum employees cannot be more than the maximum employees."}');
   });
 
-  // it("Should return search results if empty string in search", async function() {
-  //   const response = await request(app).get('/companies?max_employees=100');
-  //   expect(response.statusCode).toBe(200);
-  //   expect(response.body.companies).toHaveLength(1);
-  //   expect(response.body.companies[0]).toHaveProperty('handle');
-  // });
+  it("Should return search results if empty string in search", async function() {
+    const response = await request(app).get('/companies?max_employees=100');
+    expect(response.statusCode).toBe(200);
+    expect(response.body.companies).toHaveLength(1);
+    expect(response.body.companies[0]).toHaveProperty('handle');
+  });
 
   it("If company handle is passed as parameter in the URL it should return data about an existing company", async function(){
     const response = await request(app).get(`/companies/testcompany`);

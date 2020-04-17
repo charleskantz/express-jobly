@@ -51,6 +51,10 @@ router.post('/', async function(req, res, next) {
 
 router.patch('/:username', async function(req, res, next) {
   try {
+    //If PATCH request has no data, return error
+    if ( Object.keys(req.body).length === 0 ) {
+      throw new ExpressError("Update request does not contain any data.", 400);
+    }
     const result = jsonSchema.validate(req.body, userUpdateSchema);
 
     if ( !result.valid ) {

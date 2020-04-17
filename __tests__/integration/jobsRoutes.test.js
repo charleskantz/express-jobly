@@ -116,7 +116,7 @@ describe("Job GET Routes Integration Tests", function() {
     expect(response.body.job.equity).toEqual(0.7);
   })
 
-  it("GRAB ERROR: Should reject updates and return 400 error if we pass invlaid data", async function(){
+  it("Should reject updates and return 400 error if we pass invalid data", async function(){
     const response = await request(app).patch(`/jobs/${jobID}`).send(badTestJobData);
     expect(response.statusCode).toBe(400);
     expect(response.error.text).toEqual("{\"status\":400,\"message\":[\"instance.equity must have a maximum value of 1\"]}");

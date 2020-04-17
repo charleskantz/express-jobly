@@ -20,5 +20,10 @@
     "nodemon": "^2.0.3",
     "pg": "^8.0.2",
     "supertest": "^4.0.2"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "<rootDir>/__tests__/integration/config","<rootDir>/__tests__/unit/config"
+    ]
   }
 }
