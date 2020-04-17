@@ -12,11 +12,13 @@ app.use(morgan("tiny"));
 // route loading
 const companiesRoutes = require('./routes/companiesRoutes');
 const jobsRoutes = require('./routes/jobsRoutes');
+const usersRoutes = require('./routes/usersRoutes');
 
 // route middleware
 
 app.use('/companies', companiesRoutes);
 app.use('/jobs', jobsRoutes);
+app.use('/users', usersRoutes);
 
 /** 404 handler */
 
