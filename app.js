@@ -31,16 +31,15 @@ app.use('/users', usersRoutes);
 app.post("/login", async function (req, res, next) {
   try {
     let { username, password } = req.body;
-    let result = await User.authenticate(username, password);
+    let result = await User.authenticate(username, password); // could destructure here
     if (result.authentication) { // user is authorized
       let is_admin = result.is_admin;
-      let token = jwt.sign({username, is_admin }, SECRET_KEY);
+      let token = jwt.sign({ username, is_admin }, SECRET_KEY);
       return res.json({ token });
     } else {  //  user is rejected
       throw new ExpressError("Invalid username/password", 400);
     }
   }
-
   catch (err) {
     return next(err);
   }
@@ -48,7 +47,7 @@ app.post("/login", async function (req, res, next) {
 
 /** 404 handler */
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   const err = new ExpressError("Not Found", 404);
 
   // pass the error to the next piece of middleware
@@ -57,7 +56,7 @@ app.use(function(req, res, next) {
 
 /** general error handler */
 
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   console.error(err.stack);
 

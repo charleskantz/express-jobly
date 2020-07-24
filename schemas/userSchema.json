@@ -13,7 +13,6 @@
       "first_name",
       "last_name",
       "email",
-      "is_admin",
       "password"
     ]},
     {"required": [
@@ -21,7 +20,6 @@
       "first_name",
       "last_name",
       "email",
-      "is_admin",
       "password"
     ]}
     ],
@@ -86,16 +84,6 @@
         "examples": [
             "secret"
         ]
-    },
-      "is_admin": {
-          "$id": "#/properties/is_admin",
-          "type": "boolean",
-          "title": "The Is_admin Schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": false,
-          "examples": [
-              true
-          ]
-      }
+    }
   }
 }

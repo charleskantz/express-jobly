@@ -39,6 +39,8 @@ function ensureCorrectUser(req, res, next) {
   }
 }
 
+/** Middleware: Requires is_admin in token to be TRUE. */
+
 function ensureUserAdmin(req, res, next) {
   try {
     if (req.user.is_admin) {

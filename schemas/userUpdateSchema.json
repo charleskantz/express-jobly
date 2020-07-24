@@ -12,8 +12,7 @@
     {"required": ["_token", "last_name"]},
     {"required": ["_token", "password"]},
     {"required": ["_token", "photo_url"]},
-    {"required": ["_token", "email"]},
-    {"required": ["_token", "is_admin"]}
+    {"required": ["_token", "email"]}
   ],
   "properties": {
       "username": {
@@ -75,16 +74,6 @@
           "default": "",
           "examples": [
               "www.joel.com"
-          ]
-      },
-      "is_admin": {
-          "$id": "#/properties/is_admin",
-          "type": "boolean",
-          "title": "The Is_admin Schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": false,
-          "examples": [
-              true
           ]
       },
       "_token": {
