@@ -12,14 +12,14 @@ This project was made during my time at Rithm School, and was a great project to
 **When in project directory:**
 
 - Install dependencies by running `npm install`
-- Create PostgreSQL database named `jobly` and import schema from `data.sql` by running `psql jobly < data.sql`
+- Create PostgreSQL database named `jobly` and seed the database schema from `data.sql` by running `psql jobly < data.sql`
 - Start the server by running `npm start`, it should be running on `localhost:3000`
 
 # What Can I Do?
 
 Here's some helpful routes to call while playing around with Jobly:
 
->***NOTE*** - Some routes require an admin account which is not available through the API. Using `psql` or an app like `Postico`, you can set a user's `is_admin` column to `True` and it will give that account full access to all routes.
+>***NOTE*** - Some routes require an admin account which cannot be created using the API. Using `psql` or an app like `Postico`, you can set a user's `is_admin` column to `True` and it will give that account full access to all routes.
 
 ## User Routes
 
@@ -102,4 +102,4 @@ This route deletes a job and returns a message.
 
 # Contributors
 
-This project was created by @charleskantz and @ulejnar. The project was coded with paired programming, so contributions were equal. @charleskantz is now maintaining this project.
+This project was created by @charleskantz and @ulejnar. The project was coded with paired programming, so contributions were equal across all aspects of the app. @charleskantz is now maintaining this project.
